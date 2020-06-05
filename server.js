@@ -31,11 +31,6 @@ const listening = () => {
 
 const server = app.listen(port, listening);
 
-// Routes
-app.get('/allweatherdata', getWeatherData);
-
-app.post('/weatherdata', addNewWeatherData);
-
 // Main Functions
 const getWeatherData = (req, res) => res.send(projectData);
 
@@ -51,3 +46,8 @@ const addNewWeatherData = (req, res) => {
     };
     res.send(newEntry);
 }
+
+// Routes
+app.get('/allweatherdata', getWeatherData);
+
+app.post('/weatherdata', addNewWeatherData);
