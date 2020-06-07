@@ -12,8 +12,6 @@ const getWeatherData = (event) => {
     getWeatherforZip(owmUrl + zip + owmApiKey)
         .then((owmResponse) => {
             if (owmResponse.main && owmResponse.main.temp) {
-                console.log('success');
-                // call post and update projectData
                 const userResponse = document.getElementById('feelings').value;
                 const data = {
                     temperature: owmResponse.main.temp,
@@ -24,10 +22,9 @@ const getWeatherData = (event) => {
                     .then((postResponse) => {
                         updateUI();
                     });
-                // then update UI
             } else {
                 console.log('error');
-                // update UI with error message
+                showErrorMessage(owmResponse);
             }
         }).then;
 }
@@ -40,6 +37,14 @@ const updateUI = () => {
             document.getElementById('temp').innerHTML = latestEntry.temperature;
             document.getElementById('content').innerHTML = latestEntry.userResponse;
         })
+}
+
+const showErrorMessage = (owmResponse) => {
+    const modal = document.getElementById('errorModal');
+    document.getElementById('errorMessage').innerHTML = owmResponse.message;
+    modal.style.display = "block";
+    document.getElementById('closeModal').addEventListener('click', () => modal.style.display = 'none');
+    window.addEventListener('click', (event) => {if (event.target !== modal) {modal.style.display = 'none';}});
 }
 
 // Helper Functions
