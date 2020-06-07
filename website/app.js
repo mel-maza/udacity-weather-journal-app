@@ -1,6 +1,6 @@
 /* Global Variables */
-OwmUrl = 'https://api.openweathermap.org/data/2.5/weather?id=';
-OwmApiKey = '&appid=66c1a8d4f4f4474aeae2c15feab2bcaf';
+owmUrl = 'https://api.openweathermap.org/data/2.5/weather?id=';
+owmApiKey = '&appid=66c1a8d4f4f4474aeae2c15feab2bcaf';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -9,8 +9,44 @@ let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 // Main Functions
 const getWeatherData = (event) => {
     const zip = document.getElementById('zip').value;
-    getWeatherforZip(OwmUrl + zip + OwmApiKey)
-        .then((response) => console.log(response));
+    getWeatherforZip(owmUrl + zip + owmApiKey)
+        .then((owmResponse) => {
+            if (owmResponse.main && owmResponse.main.temp) {
+                console.log('success');
+                // call post and update projectData
+                const userResponse = document.getElementById('feelings').value;
+                const data = {
+                    temperature: owmResponse.main.temp,
+                    date: newDate,
+                    userResponse
+                }
+                postData('/weatherdata', data)
+                    .then((postResponse) => {
+                        updateUI();
+                    });
+                // then update UI
+            } else {
+                console.log('error');
+                // update UI with error message
+            }
+        }).then;
+}
+
+const updateUI = () => {
+    retrieveAllData('/allweatherdata')
+        .then((allData) => {
+            const latestEntry = getLatestEntry(allData);
+            document.getElementById('date').innerHTML = latestEntry.date;
+            document.getElementById('temp').innerHTML = latestEntry.temperature;
+            document.getElementById('content').innerHTML = latestEntry.userResponse;
+        })
+}
+
+// Helper Functions
+const getLatestEntry = (allData) => {
+    const keysAsNumbers = Object.keys(allData).map(key => parseInt(key));
+    const latestKey = Math.max.apply(null, keysAsNumbers);
+    return allData[latestKey];
 }
 
 // Fetch Functions
@@ -21,6 +57,33 @@ const getWeatherforZip = async (url = '') => {
         return weatherData;
     } catch (error) {
         console.log('An error occurred while calling the OpenWeatherMap-API: ', error);
+    }
+}
+
+const postData = async (url = '', data = {}) => {
+    const response = await fetch(url,{
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+    try {
+        const newData = await response.json();
+        return newData;
+    } catch (error) {
+        console.log('An error occurred while updating the data: ', error);
+    }
+}
+
+const retrieveAllData = async (url = '') => {
+    const response = await fetch(url);
+    try {
+        const allData = await response.json();
+        return allData;
+    } catch (error) {
+        console.log('An error occurred while retrieving the projectData: ', error);
     }
 }
 
