@@ -1,10 +1,21 @@
 # Weather-Journal App Project
 
 ## Overview
-This project requires you to create an asynchronous web app that uses Web API and user data to dynamically update the UI. 
+This is the weather-journal app project from udacity.
+The project shows the usage of an own local server and the handling with get and post routes as well as asynchronous javascript.
+The code was written by ME :-)
 
 ## Instructions
-This will require modifying the `server.js` file and the `website/app.js` file. You can see `index.html` for element references, and once you are finished with the project steps, you can use `style.css` to style your application to customized perfection.
+Start the local server with `node server.js`.
+Then got to `http://localhost:8080/` in the browser.
 
-## Extras
-If you are interested in testing your code as you go, you can use `tests.js` as a template for writing and running some basic tests for your code.
+## What You're Getting
+```bash
+├── README.md - This file.
+├── package-lock.json # used packages in this project
+├── server.js # contains the server-side code
+├── node_modules # contains the used packages in this project
+└── website # contains the client-side code
+    ├── app.js # contains the javascript part of the client-side code
+    ├── index.html # Page where it all starts
+    └── style.css # contains the styling of the client-side code
