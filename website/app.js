@@ -23,7 +23,6 @@ const getWeatherData = (event) => {
                         updateUI();
                     });
             } else {
-                console.log('error');
                 showErrorMessage(owmResponse);
             }
         }).then;
