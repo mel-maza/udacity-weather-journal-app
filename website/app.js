@@ -1,6 +1,6 @@
 /* Global Variables */
-owmUrl = 'https://api.openweathermap.org/data/2.5/weather?id=';
-owmApiKey = '&appid=66c1a8d4f4f4474aeae2c15feab2bcaf';
+const owmUrl = 'https://api.openweathermap.org/data/2.5/weather?zip=';
+const owmApiKey = '&appid=66c1a8d4f4f4474aeae2c15feab2bcaf&units=imperial';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
